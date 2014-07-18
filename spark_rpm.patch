@@ -1,0 +1,71 @@
+From a71147f67e4818377fca483b56b3f1f87ec2b146 Mon Sep 17 00:00:00 2001
+From: root <root@4c03e140fb35.(none)>
+Date: Thu, 17 Jul 2014 13:39:58 +0100
+Subject: [PATCH] (1) add the examples jar to result deb package (2) make the deb's bin folder excecutable by everyone
+
+---
+ assembly/pom.xml |   14 +++++++++++++-
+ pom.xml          |    2 +-
+ 2 files changed, 14 insertions(+), 2 deletions(-)
+
+diff --git a/assembly/pom.xml b/assembly/pom.xml
+index 4f6aade..72d4d7d 100644
+--- a/assembly/pom.xml
++++ b/assembly/pom.xml
+@@ -39,6 +39,8 @@
+     <deb.pkg.name>spark</deb.pkg.name>
+     <deb.install.path>/usr/share/spark</deb.install.path>
+     <deb.user>root</deb.user>
++    <spark.examples.jar.basename>spark-examples-${project.version}-hadoop${hadoop.version}.jar</spark.examples.jar.basename>
++    <spark.examples.jar>${basedir}/../examples/target/${spark.jar.dir}/${spark.examples.jar.basename}</spark.examples.jar>
+   </properties>
+ 
+   <dependencies>
+@@ -248,6 +250,16 @@
+                       </mapper>
+                     </data>
+                     <data>
++                      <src>${spark.examples.jar}</src>
++                      <type>file</type>
++                      <mapper>
++                        <type>perm</type>
++                        <user>${deb.user}</user>
++                        <group>${deb.user}</group>
++                        <prefix>${deb.install.path}/jars</prefix>
++                      </mapper>
++                    </data>
++                    <data>
+                       <src>${basedir}/src/deb/RELEASE</src>
+                       <type>file</type>
+                       <mapper>
+@@ -276,7 +288,7 @@
+                         <user>${deb.user}</user>
+                         <group>${deb.user}</group>
+                         <prefix>${deb.install.path}/bin</prefix>
+-                        <filemode>744</filemode>
++                        <filemode>755</filemode>
+                       </mapper>
+                     </data>
+                     <data>
+diff --git a/pom.xml b/pom.xml
+index 4e2d64a..db2e15b 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -96,13 +96,13 @@
+     <module>sql/core</module>
+     <module>sql/hive</module>
+     <module>repl</module>
+-    <module>assembly</module>
+     <module>external/twitter</module>
+     <module>external/kafka</module>
+     <module>external/flume</module>
+     <module>external/zeromq</module>
+     <module>external/mqtt</module>
+     <module>examples</module>
++    <module>assembly</module>
+   </modules>
+ 
+   <properties>
+-- 
+1.7.1
+
