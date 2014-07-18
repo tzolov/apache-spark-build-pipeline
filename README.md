@@ -77,17 +77,17 @@ run `docker build`
     cd apache-spark-build-pipeline
     docker build --tag="tzolov/my-apache-spark-build-pipeline:1.0.0" .
 
-### Some pre-build RPMS
+
+### Install and Use Spark RPMs
+
+#### Pre-build Spark rpms
 
 + Apache Hadoop 2.2.0:
-[Spark 1.0.1 RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm)
-[Spark master snapshot RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
-+ PivotalHD 2.0:
-[Spark 1.0.1 RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) 
-[Spark master snapshot RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
-
-
-### Install Spark RPM with Yarn Hadoop distribution
+[Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) , 
+[Spark Master Snapshot 17.07.2014](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
++ PivotalHD2.0 (Hadoop 2.2.0 based):
+[Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) ,
+[Spark Master Snapshot 17.07.2014](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
 
 Install it directly from the remote rpm
 
