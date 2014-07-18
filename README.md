@@ -11,7 +11,8 @@ Docker container, equipped with all necessary tools to Build Apache Spark and ge
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
 ### Create Spark RPM
-`Step by step instructions to build and generate Spark rpm` section below provides detail instructions of how to build a Spark RPM by hand. Tthe [build_rpm.sh](/build_rpm.sh) utility authomate and simplify the build process.
+The [build_rpm.sh](/build_rpm.sh) utility authomate and simplify the build process.
+The `Build Spark RPM by hand` section below provides detail step by step instructions of how to build a Spark RPM by hand. 
 
 #### Build Spark RPM with the build_rpm.sh script
 The [build_rpm.sh](/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch\Tag>`. Then it clones a new copy Spark git project, builds a Spark DEB package and converts it into RPM. The RPM is stored in the `/rpm/<hadoop version>` folder. (Note: On each run this scripts deletes and clones again the /spark repository!)
