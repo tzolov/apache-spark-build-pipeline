@@ -45,54 +45,5 @@ RUN \
 # Sink with the Spark git repo
 WORKDIR /spark
 
+# Sync with the git master repo
 CMD git pull --rebase
-
-## Prepare your Docker daemon (Spark build requires at least 4GB memory)
-# boot2docker delete
-# boot2docker init -m 8192
-# boot2docker up 
-# boot2docker ip
-#   The VM's Host only interface IP address is: <Docker Host IP>
-# export DOCKER_HOST=tcp://<Docker Host IP>:2375
-
-## Create an image locally
-# docker build --tag="tzolov/apache-spark-build-pipeline:1.0.0" ~/Development/projects/apache-spark-build-pipeline/
-
-## Run a container with the latest image
-# docker run -t -i tzolov/apache-spark-build-pipeline:tatest /bin/bash
-
-## Generate an Spark RPM
-
-## Update the local Git repository
-# cd /spark
-# git pull --rebase
-
-## Pick a branch/tag to generate RPM for.
-# git  branch -a or git tag
-# git checkout tags/v1.0.1
-
-## Apply a patch that allows no-root user to run spark and to include the spark examples into the rpm
-# git am < spark_rpm.patch
-
-## Build SPARK 	and generate DEB packages
-# mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests clean package
-
-## Check the Deb package and convert it into RPM
-# dpkg-deb --info '/spark/assembly/target/spark_*.deb'
-# alien -v -r /spark/assembly/target/spark_*.deb 
-
-## Automatic Spark RPM generation script. Note: scripts deletes and clones the /spark folders every time it is run
-# /build_rpm.sh 2.2.0 tags/v1.0.1 or /build_rpm.sh 2.2.0-gphd-3.0.1.0 tags/v1.0.1
-
-## Sink the generated rpms folder with the docker host
-# scp -rp /rpm docker@<Docker Host IP>: 
-
-## Copy rpms from the Docker host into Dropbox folder
-# cd /Users/tzoloc/Dropbox/Public/spark; scp -rp docker@<Docker Host IP>:rpm .
-
-## Generate Spark Tar.gz distro (excludes deb or rpm)
-# /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
-
-## Create a patch for the last commit
-# git format-patch -1 --stdout > rpm.patch
-
