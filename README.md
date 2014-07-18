@@ -1,26 +1,19 @@
-apache-spark-build-pipeline
+Apache Spark Build Pipeline
 ===========================
 
 Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs
 
-### Configure Docker Host with at least 4GB of memory
-Spark build requires at least 4GB of memory. In case of boot2docker host the following 
-snippet shows how to set 8GB of memory:
+### Installation
 
-    boot2docker delete; boot2docker init -m 8192; 
+* Install [Docker](https://www.docker.io/).
+* Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
+* Configure Docker Host - Spark build requires at least 4GB of memory. In case of boot2docker host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
+* Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
-Start the host and set the ip:
+### Create Spark RPM
+You can use the `build_rpm.sh` utility script or manually update the git reposityr, build spark locally with Deb option enabled and coverte the deb packages into rpm using the `alien` tool.
 
-    boot2docker up 
-    boot2docker ip
-      The VM's Host only interface IP address is: <Docker Host IP>
-    export DOCKER_HOST=tcp://<Docker Host IP>:2375
-    
-Start a container with the latest image
-
-    docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash
-
-### Fast (authomatic) Spark RPM generation
+#### Use the build_rpm.sh helper script
 The build_rpm.sh script authomates the rpm build process. The script takes `<hadoop version>` and `<spark branch\tag>` 
 input parameters and stores the generated rpm in `/rpm/<hadoop version>` folder.
 Note: scripts deletes and clones the /spark folders every time it is run.
@@ -40,7 +33,7 @@ Or coppy the Docker Host /rpms into local folder
 
     cd /Users/tzoloc/Dropbox/Public/spark; scp -rp docker@<Docker Host IP>:rpm .
     
-### Manual Spark RPM generation 
+#### Manual Spark RPM generation 
 Inside a running container perform the following steps.
 
     # Update the local Git repository with the remote master
@@ -69,18 +62,17 @@ Spark project provides `make-distribution.sh` which can geneate project Tar.gz (
 
     /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
 
-### Build the Spark Build Pipeline image locally
-You can build the spark-build-pipeline `Dockerfile` image yourself. Just clone the GitHub repository and
-run `docker build`
- 
-    git clonehttps://github.com/tzolov/apache-spark-build-pipeline.git
-    cd apache-spark-build-pipeline
-    docker build --tag="tzolov/my-apache-spark-build-pipeline:1.0.0" .
+### Start the boot2docker host and set the ip:
+
+    boot2docker up 
+    boot2docker ip
+      The VM's Host only interface IP address is: <Docker Host IP>
+    export DOCKER_HOST=tcp://<Docker Host IP>:2375
 
 
 ### Install and Use Spark RPMs
 
-#### Pre-build Spark rpms
+#### Pre-build Spark RPMs links
 
 + Apache Hadoop 2.2.0:
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) , 
