@@ -35,8 +35,8 @@ RUN \
       cd / ;\
       git clone https://github.com/apache/spark.git ;\
       cd /spark ;\
-      mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 dependency:go-offline ;\
-      mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0-gphd-3.0.1.0 dependency:go-offline ;\
+      mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests clean package ;\
+      mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0-gphd-3.0.1.0 -DskipTests clean package ;\
       cd / ;\ 
     echo "---------------- Configure the build utilities -----------------" ;\      
       chmod a+x /build_rpm.sh 
