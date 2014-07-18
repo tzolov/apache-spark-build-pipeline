@@ -11,12 +11,10 @@ Docker container, equipped with all necessary tools to Build Apache Spark and ge
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
 ### Create Spark RPM
-You can use the `build_rpm.sh` utility script or manually update the git reposityr, build spark locally with Deb option enabled and coverte the deb packages into rpm using the `alien` tool.
+`Step by step instructions to build and generate Spark rpm` section below provides detail instructions of how to build a Spark RPM by hand. Tthe [build_rpm.sh](/build_rpm.sh) utility authomate and simplify the build process.
 
-#### Use the build_rpm.sh helper script
-The build_rpm.sh script authomates the rpm build process. The script takes `<hadoop version>` and `<spark branch\tag>` 
-input parameters and stores the generated rpm in `/rpm/<hadoop version>` folder.
-Note: scripts deletes and clones the /spark folders every time it is run.
+#### Build Spark RPM with the build_rpm.sh script
+The [build_rpm.sh](/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch\Tag>`. Then it clones a new copy Spark git project, builds a Spark DEB package and converts it into RPM. The RPM is stored in the `/rpm/<hadoop version>` folder. (Note: On each run this scripts deletes and clones again the /spark repository!)
 
 Example usages:
 
@@ -24,17 +22,10 @@ Example usages:
      or  
     /build_rpm.sh 2.2.0-gphd-3.0.1.0 tags/v1.0.1
     
-Output is stored in the `/rpm/<hadoop version>` folder. Sink the generated rpms folder with the docker host
-over SSH: 
-
-    scp -rp /rpm docker@<Docker Host IP>: 
-
-Or coppy the Docker Host /rpms into local folder
-
-    cd /Users/tzoloc/Dropbox/Public/spark; scp -rp docker@<Docker Host IP>:rpm .
+The result RPM is stored in the `/rpm/<Hadoop Version>` folder. You can copy the `/rpm` over SSH to the Host `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
-#### Manual Spark RPM generation 
-Inside a running container perform the following steps.
+#### Build Spark RPM by hand
+Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running container perform the following steps.
 
     # Update the local Git repository with the remote master
     cd /spark
