@@ -2,8 +2,7 @@ Apache Spark Build Pipeline
 ===========================
 
 Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs.
-
-CentOS6 environment, preinstalled with Oracle-java7, Maven, Git and Alien library.
+CentOS6, [Java7](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html), [Maven3](http://maven.apache.org/), [Git](https://github.com/), [Alien](http://en.wikipedia.org/wiki/Alien_(software)).
 
 ### Installation
 
@@ -13,19 +12,21 @@ CentOS6 environment, preinstalled with Oracle-java7, Maven, Git and Alien librar
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
 ### Create Spark RPM
-The [build_rpm.sh](/build_rpm.sh) utility authomate and simplify the build process.
+The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) utility authomate and simplify the build process.
 The `Build Spark RPM by hand` section below provides detail step by step instructions of how to build a Spark RPM by hand. 
 
 #### Build Spark RPM with the build_rpm.sh script
-The [build_rpm.sh](/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch\Tag>`. Then it clones a new copy Spark git project, builds a Spark DEB package and converts it into RPM. The RPM is stored in the `/rpm/<hadoop version>` folder. (Note: On each run this scripts deletes and clones again the /spark repository!)
+Run `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` to generate new Spark rpm, using the provided Spark and Hadoop versions. Note: only Hadoop Yarn distros are supported by this script. 
+The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch or Tag>`.  Created RPM is copied into `/rpm/<Hadoop Version>` folder.  
 
 Example usages:
 
     /build_rpm.sh 2.2.0 tags/v1.0.1 
-     or  
+               or  
     /build_rpm.sh 2.2.0-gphd-3.0.1.0 tags/v1.0.1
     
-The result RPM is stored in the `/rpm/<Hadoop Version>` folder. You can copy the `/rpm` over SSH to the Host `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
+You can copy the `/rpm` folder over SSH to the Host `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
+(Note: On each run the script deletes and clones again the /spark repository!)
     
 #### Build Spark RPM by hand
 Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running container perform the following steps.
@@ -51,8 +52,8 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
 
 Generated spark RPM is stored in the /spark folder (or the folder where the `alien` is run)
 
-### Generate Spark Tar.gz distribution 
-Spark project provides `make-distribution.sh` which can geneate project Tar.gz (excluding the Deb or Rpm)
+### Generate Spark tar.gz distribution 
+In addition to the DEB and RPM packages you can use the `make-distribution.sh` script to generate tar.gz distribution. (Note that this tar.gz excludd Deb or Rpm packages)
 
     /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
 
