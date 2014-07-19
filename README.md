@@ -1,7 +1,9 @@
 Apache Spark Build Pipeline
 ===========================
 
-Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs
+Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs.
+
+CentOS6 environment, preinstalled with Oracle-java7, Maven, Git and Alien library.
 
 ### Installation
 
