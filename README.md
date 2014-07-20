@@ -7,7 +7,7 @@ Tools installed include: CentOS6, [Java7](http://www.oracle.com/technetwork/java
 ### 1. Installation
 
 * Install [Docker](https://www.docker.io/).
-* Configure Docker Host - Spark build requires at least 4GB of memory. In case of boot2docker host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
+* Configure Docker Host - Spark build requires at least 4GB of memory. In case of [boot2docker](http://boot2docker.io/) host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
 * Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
