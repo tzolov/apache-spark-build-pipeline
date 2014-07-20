@@ -13,7 +13,7 @@ Tools installed include: CentOS6, [Java7](http://www.oracle.com/technetwork/java
 
 ### 2. Create Spark RPM
 The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) utility simplifies the rpm creation process.
-Alternatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#build-spark-rpm-by-hand) section. 
+Alternatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#22-build-spark-rpm-by-hand) section. 
 
 #### 2.1 Use Spark build_rpm.sh script
 The `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` will generate new Spark rpm for the specified Spark and Hadoop versions (only Hadoop Yarn distros are supported). The build process applies a [spark_rpm.patch](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/spark_rpm.patch) to allows no-root users to run spark and to include the spark examples into the rpm.
@@ -33,7 +33,7 @@ Example usages:
     
 You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
-#### 2.1 Build Spark RPM by hand
+#### 2.2 Build Spark RPM by hand
 Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running apache-spark-build-pipeline container perform the following steps:
 
     # Update the local Git repository with the remote master
