@@ -64,6 +64,8 @@ If you only need a pre-build tar.gz (excluding deb or rpm) package like the thos
 
 ### 4. Use Spark RPMs
 
+Prerequisites: Installed Hadoop2/Yarn cluster. For testing the Spark rpm you can easily install a single-node Hadoop cluster: [PivotalHD 2.0 Single Node VM](https://network.gopivotal.com/products/pivotal-hd)
+
 #### 4.1 Install Spark RPM
 
 Pre-build Spark RPMs are available at:
@@ -74,7 +76,7 @@ Pre-build Spark RPMs are available at:
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) ,
 [Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
 
-Install the rpm from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local filesystem `sudo yum install ./spark-XXX.noarch.rpm`
+On your Hadoop master node Install the rpm from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local filesystem `sudo yum install ./spark-XXX.noarch.rpm`
 
 #### 4.2 Run Spark Shell
 Set the `HADOOP_CONF_DIR` to the location of hadoop-conf directory. For [PivotalHD](http://www.gopivotal.com/big-data/pivotal-hd) HADOOP_CONF_DIR defaults to `/etc/gphd/hadoop/conf`. For CDH it may default to `/etc/hadoop/conf`
