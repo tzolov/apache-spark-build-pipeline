@@ -71,8 +71,9 @@ If you only need a pre-build tar.gz (excluding deb or rpm) package like the thos
       The VM's Host only interface IP address is: <Docker Host IP>
     export DOCKER_HOST=tcp://<Docker Host IP>:2375
 
-#### Pre-build Spark RPMs links
+#### Install Spark RPM
 
+Pre-build Spark RPMs are available at:
 + Apache Hadoop 2.2.0:
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) , 
 [Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
@@ -80,15 +81,15 @@ If you only need a pre-build tar.gz (excluding deb or rpm) package like the thos
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) ,
 [Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
 
-Install from the remote rpm url: `sudo yum -y install <use one of the RPM urls above>` or install fom the localy build `sudo yum install ./spark-XXX.noarch.rpm`
+Install from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local file `sudo yum install ./spark-XXX.noarch.rpm`
 
-Run Spark Shell
+#### Run Spark Shell
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
     export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
     /usr/share/spark/bin/spark-shell --master yarn-client
     
-Submit Sample Spark application: SparkPi
+#### Submit Sample Spark application: SparkPi
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
     export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
@@ -98,4 +99,3 @@ Submit Sample Spark application: SparkPi
       --master yarn-cluster \ 
       --class org.apache.spark.examples.SparkPi \
       /usr/share/spark/jars/spark-examples-1.0.1-hadoop2.2.0.jar 10
-
