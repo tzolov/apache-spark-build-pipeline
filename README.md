@@ -2,34 +2,39 @@ Apache Spark Build Pipeline
 ===========================
 
 Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs.
-CentOS6, [Java7](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html), [Maven3](http://maven.apache.org/), [Git](https://github.com/), [Alien](http://en.wikipedia.org/wiki/Alien_(software)).
+Tools installed include: CentOS6, [Java7](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html), [Maven3](http://maven.apache.org/), [Git](https://github.com/), [Alien](http://en.wikipedia.org/wiki/Alien_(software)).
 
 ### Installation
 
 * Install [Docker](https://www.docker.io/).
-* Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
 * Configure Docker Host - Spark build requires at least 4GB of memory. In case of boot2docker host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
+* Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
 ### Create Spark RPM
-The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) utility authomate and simplify the build process.
-The `Build Spark RPM by hand` section below provides detail step by step instructions of how to build a Spark RPM by hand. 
+The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) utility simplifies the rpm creation process.
+Alterntatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#build-spark-rpm-by-hand) section. 
 
 #### Build Spark RPM with the build_rpm.sh script
-Run `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` to generate new Spark rpm, using the provided Spark and Hadoop versions. Note: only Hadoop Yarn distros are supported by this script. 
-The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch or Tag>`.  Created RPM is copied into `/rpm/<Hadoop Version>` folder.  
+The `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` will generate new Spark rpm for the specified Spark and Hadoop versions (only Hadoop Yarn distros are supported). The build process applies a [spark_rpm.patch](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/spark_rpm.patch) to allows no-root users to run spark and to include the spark examples into the rpm.
+The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch or Tag>`. Produced RPMs are stored into `/rpm/<Hadoop Version>` folder.  
+(Note: On each run the script deletes and clones again the /spark repository!)
 
 Example usages:
 
+    # Build Spark 1.0.1 rpm for Apache Hadoop 2.2.0
     /build_rpm.sh 2.2.0 tags/v1.0.1 
-               or  
+
+	# Build Spark 1.0.1 rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
     /build_rpm.sh 2.2.0-gphd-3.0.1.0 tags/v1.0.1
     
-You can copy the `/rpm` folder over SSH to the Host `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
-(Note: On each run the script deletes and clones again the /spark repository!)
+    # Build Spark master (last snapshot) rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
+    /build_rpm.sh 2.2.0-gphd-3.0.1.0 master
+    
+You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
 #### Build Spark RPM by hand
-Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running container perform the following steps.
+Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running apache-spark-build-pipeline container perform the following steps:
 
     # Update the local Git repository with the remote master
     cd /spark
@@ -50,10 +55,10 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
     dpkg-deb --info '/spark/assembly/target/spark_*.deb'
     alien -v -r /spark/assembly/target/spark_*.deb 
 
-Generated spark RPM is stored in the /spark folder (or the folder where the `alien` is run)
+Generated spark RPM is saved in the folder where the `alien` is run.
 
-### Generate Spark tar.gz distribution 
-In addition to the DEB and RPM packages you can use the `make-distribution.sh` script to generate tar.gz distribution. (Note that this tar.gz excludd Deb or Rpm packages)
+### Generate Spark pre-build tar.gz (excluding Deb or Rpm)
+If you only need a pre-build tar.gz (excluding deb or rpm) package like the those officially distributed or [Spark website](http://spark.apache.org/downloads.html) Then you can use the `make-distribution.sh` script.
 
     /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
 
@@ -71,18 +76,12 @@ In addition to the DEB and RPM packages you can use the `make-distribution.sh` s
 
 + Apache Hadoop 2.2.0:
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) , 
-[Spark Master Snapshot 17.07.2014](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
+[Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
 + PivotalHD2.0 (Hadoop 2.2.0 based):
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) ,
-[Spark Master Snapshot 17.07.2014](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
+[Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
 
-Install it directly from the remote rpm
-
-    sudo yum -y install <use one of the RPM urls above>
-
-Install fom the localy build rpm
-    
-    sudo yum install ./spark-XXX.noarch.rpm
+Install it directly from the remote rpm `sudo yum -y install <use one of the RPM urls above>` or install fom the localy build rpm `sudo yum install ./spark-XXX.noarch.rpm`
 
 Run Spark Shell
 
@@ -93,7 +92,7 @@ Run Spark Shell
 Submit Sample Spark application: SparkPi
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
-    export SPARK_SUBMIT_CLASSPATH=$SPARK_SUBMIT_CLASSPATH:/usr/share/spark/jars/spark-assembly-1.0.0-hadoop2.2.0.jar
+    export SPARK_SUBMIT_CLASSPATH=$SPARK_SUBMIT_CLASSPATH:/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
 
     /usr/share/spark/bin/spark-submit \ 
       --num-executors 10  \ 
