@@ -7,7 +7,7 @@ Tools installed include: CentOS6, [Java7](http://www.oracle.com/technetwork/java
 ### 1. Installation
 
 * Install [Docker](https://www.docker.io/).
-* Configure Docker Host - Spark build requires at least 4GB of memory. In case of [boot2docker](http://boot2docker.io/) host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
+* Configure Docker Host - Spark build requires at least 4GB of memory. (For [boot2docker](http://boot2docker.io/) host set 8GB of memory: `boot2docker delete; boot2docker init -m 8192; boot2docker up; export DOCKER_HOST=tcp://<Docker Host IP>:2375`)
 * Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
@@ -63,13 +63,6 @@ If you only need a pre-build tar.gz (excluding deb or rpm) package like the thos
     /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
 
 ### 4. Use Spark RPMs
-
-#### 4.1 Start the boot2docker host and set the IP:
-
-    boot2docker up 
-    boot2docker ip
-      The VM's Host only interface IP address is: <Docker Host IP>
-    export DOCKER_HOST=tcp://<Docker Host IP>:2375
 
 #### 4.2 Install Spark RPM
 
