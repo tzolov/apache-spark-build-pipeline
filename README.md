@@ -4,18 +4,18 @@ Apache Spark Build Pipeline
 Docker container, equipped with all necessary tools to Build Apache Spark and generate RPMs.
 Tools installed include: CentOS6, [Java7](http://www.oracle.com/technetwork/java/javase/downloads/jre7-downloads-1880261.html), [Maven3](http://maven.apache.org/), [Git](https://github.com/), [Alien](http://en.wikipedia.org/wiki/Alien_(software)).
 
-### Installation
+### 1. Installation
 
 * Install [Docker](https://www.docker.io/).
 * Configure Docker Host - Spark build requires at least 4GB of memory. In case of boot2docker host set 8GB of memory like this: `boot2docker delete; boot2docker init -m 8192`     
 * Download [trusted build](https://registry.hub.docker.com/u/tzolov/apache-spark-build-pipeline/) from public [Docker Registry](https://index.docker.io/): `docker pull tzolov/apache-spark-build-pipeline` (alternatively, you can build an image from Dockerfile: `docker build -t="tzolov/my-apache-spark-build-pipeline:1.0.0" github.com/tzolov/apache-spark-build-pipeline.git`)
 * Start a container with the latest image: `docker run -t -i tzolov/apache-spark-build-pipeline /bin/bash`
 
-### Create Spark RPM
+### 2. Create Spark RPM
 The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) utility simplifies the rpm creation process.
-Alterntatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#build-spark-rpm-by-hand) section. 
+Alternatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#build-spark-rpm-by-hand) section. 
 
-#### Build Spark RPM with the build_rpm.sh script
+#### 2.1 Use Spark build_rpm.sh script
 The `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` will generate new Spark rpm for the specified Spark and Hadoop versions (only Hadoop Yarn distros are supported). The build process applies a [spark_rpm.patch](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/spark_rpm.patch) to allows no-root users to run spark and to include the spark examples into the rpm.
 The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch or Tag>`. Produced RPMs are stored into `/rpm/<Hadoop Version>` folder.  
 (Note: On each run the script deletes and clones again the /spark repository!)
@@ -33,7 +33,7 @@ Example usages:
     
 You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
-#### Build Spark RPM by hand
+#### 2.1 Build Spark RPM by hand
 Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running apache-spark-build-pipeline container perform the following steps:
 
     # Update the local Git repository with the remote master
@@ -57,21 +57,21 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
 
 Generated spark RPM is saved in the folder where the `alien` is run.
 
-### Generate Spark pre-build tar.gz (excluding Deb or Rpm)
+### 3. Build Spark tar.gz (excluding Deb or Rpm)
 If you only need a pre-build tar.gz (excluding deb or rpm) package like the those officially distributed or [Spark website](http://spark.apache.org/downloads.html) Then you can use the `make-distribution.sh` script.
 
     /spark/make-distribution.sh --with-hive --with-yarn --tgz --skip-java-test --hadoop 2.2.0 --name hadoop22
 
-### Install and Use Spark RPMs
+### 4. Use Spark RPMs
 
-#### Start the boot2docker host and set the IP:
+#### 4.1 Start the boot2docker host and set the IP:
 
     boot2docker up 
     boot2docker ip
       The VM's Host only interface IP address is: <Docker Host IP>
     export DOCKER_HOST=tcp://<Docker Host IP>:2375
 
-#### Install Spark RPM
+#### 4.2 Install Spark RPM
 
 Pre-build Spark RPMs are available at:
 + Apache Hadoop 2.2.0:
@@ -83,13 +83,13 @@ Pre-build Spark RPMs are available at:
 
 Install from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local file `sudo yum install ./spark-XXX.noarch.rpm`
 
-#### Run Spark Shell
+#### 4.3 Run Spark Shell
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
     export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
     /usr/share/spark/bin/spark-shell --master yarn-client
     
-#### Submit Sample Spark application: SparkPi
+#### 4.4 Submit Sample Spark application: SparkPi
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
     export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
