@@ -16,9 +16,9 @@ The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/ma
 Alternatively you can build the rpm by hand follwoing the step by step instructions in the [Build Spark RPM by hand](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/README.md#22-build-spark-rpm-by-hand) section. 
 
 #### 2.1 Use Spark build_rpm.sh script
-The `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` will generate new Spark rpm for the specified Spark and Hadoop versions (only Hadoop Yarn distros are supported). The build process applies a [spark_rpm.patch](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/spark_rpm.patch) to allows no-root users to run spark and to include the spark examples into the rpm.
-The [build_rpm.sh](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/build_rpm.sh) script takes 2 input arguments `<Hadoop Version>` and `<Spark Branch or Tag>`. Produced RPMs are stored into `/rpm/<Hadoop Version>` folder.  
-(Note: On each run the script deletes and clones again the /spark repository!)
+The `build_rpm.sh <Hadoop Version> <Spark Branch or Tag>` creates a new Spark rpm for the specified Spark and Hadoop versions (only Hadoop Yarn distros are supported). The build process applies a [spark_rpm.patch](https://github.com/tzolov/apache-spark-build-pipeline/blob/master/spark_rpm.patch) to allows no-root users to run spark and to include the spark examples into the rpm.
+Created RPMs are stored into `/rpm/<Hadoop Version>` folder.  
+(Note: When run the buld_rpm.sh script deletes the /spark folder and clones a fresh copy form the spark github repository!)
 
 Example usages:
 
