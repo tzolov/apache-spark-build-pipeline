@@ -31,7 +31,7 @@ Example usages:
     # Build Spark master (last snapshot) rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
     /build_rpm.sh 2.2.0-gphd-3.0.1.0 master
     
-You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>:`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
+You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>: .`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
 #### 2.2 Build Spark RPM by hand
 Detail instructions how to synch the Spark git repository, apply optional patch, build the project and generate RPM. Inside a running apache-spark-build-pipeline container perform the following steps:

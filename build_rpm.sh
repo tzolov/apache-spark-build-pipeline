@@ -19,6 +19,7 @@ echo "Branch/Tag: $ GIT_BRANCH"
 
 # Build Spark with desired Hadoop Distro and git branch
 rm -rf /spark
+cd /
 git clone https://github.com/apache/spark.git
 cd /spark
 git checkout $GIT_BRANCH
