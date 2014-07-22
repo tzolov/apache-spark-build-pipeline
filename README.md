@@ -91,8 +91,8 @@ Add spark-assembly jar to the `SPARK_SUBMIT_CLASSPATH`. The `spark-assembly-xxx.
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
     export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
 
-    /usr/share/spark/bin/spark-submit \ 
-      --num-executors 10  \ 
-      --master yarn-cluster \ 
+    /usr/share/spark/bin/spark-submit \
+      --num-executors 10  \
+      --master yarn-cluster \
       --class org.apache.spark.examples.SparkPi \
       /usr/share/spark/jars/spark-examples-1.0.1-hadoop2.2.0.jar 10
