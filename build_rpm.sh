@@ -25,14 +25,18 @@ cd /spark
 git checkout $GIT_BRANCH
 git branch
 # Add Examples jar to the RPM. Fix the bin permissions to allow non-root users start Spark
-git am < /spark_rpm.patch
+#git am < /spark_rpm.patch
+git apply /spark_rpm.patch
 
 # Kick the build
-mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=$HADOOP_DIST -DskipTests clean package
+mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=$HADOOP_DIST -DskipTests -Ddeb.bin.filemode=755 clean package
 
 # Convert DEB to RPM and store the result in /rpm/$HADOOP_DIST
 mkdir -p /rpm/$HADOOP_DIST
 cd /rpm/$HADOOP_DIST
-alien -v -r /spark/assembly/target/spark_*.deb
 
+# Uncomment if you want to verify the correctness of the deb package
+# dpkg-deb --info '/spark/assembly/target/spark_*.deb'
+
+alien -v -r /spark/assembly/target/spark_*.deb
 

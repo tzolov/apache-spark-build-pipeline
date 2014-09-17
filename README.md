@@ -46,10 +46,10 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
 
     # Patch to allows no-root user to run spark 
     # and to include the spark examples into the rpm
-    git am < spark_rpm.patch
+    git apply /spark_rpm.patch
 
     # Build SPARK and generate DEB packages
-    mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests clean package
+    mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests -Ddeb.bin.filemode=755 clean package
 
     # Check the Deb package and convert it into RPM
     dpkg-deb --info '/spark/assembly/target/spark_*.deb'
