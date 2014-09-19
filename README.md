@@ -53,7 +53,7 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
     mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests -Ddeb.bin.filemode=755 clean package
 
     # Check the Deb package and convert it into RPM
-    dpkg-deb --info '/spark/assembly/target/spark_*.deb'
+    # dpkg-deb --info '/spark/assembly/target/spark_*.deb'
     alien -v -r /spark/assembly/target/spark_*.deb 
 
 Generated spark RPM is saved in the folder where the `alien` is run.
@@ -85,16 +85,16 @@ Set the `HADOOP_CONF_DIR` to the location of hadoop-conf directory. For [Pivotal
 Add spark-assembly jar to the `SPARK_SUBMIT_CLASSPATH`. The `spark-assembly-xxx.jar` located in `/usr/share/spark/jars/` folder.
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
-    export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
+    # export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.1.0-hadoop2.2.0.jar
     /usr/share/spark/bin/spark-shell --master yarn-client
     
 #### 4.3 Submit Sample Spark application: SparkPi
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
-    export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar:/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar:
+    # export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.1.0-hadoop2.2.0.jar:/usr/share/spark/jars/spark-assembly-1.1.0-hadoop2.2.0.jar:
 
     /usr/share/spark/bin/spark-submit \
       --num-executors 10  \
       --master yarn-cluster \
       --class org.apache.spark.examples.SparkPi \
-      /usr/share/spark/jars/spark-examples-1.0.1-hadoop2.2.0.jar 10
+      /usr/share/spark/jars/spark-examples-1.1.0-hadoop2.2.0.jar 10
