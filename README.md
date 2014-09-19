@@ -47,6 +47,7 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
     # Patch to allows no-root user to run spark 
     # and to include the spark examples into the rpm
     git apply /spark_rpm.patch
+    git apply /spark_lib_symlink.patch
 
     # Build SPARK and generate DEB packages
     mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=2.2.0 -DskipTests -Ddeb.bin.filemode=755 clean package
@@ -73,7 +74,8 @@ Pre-build Spark RPMs are available at:
 [Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) , 
 [Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm)
 + PivotalHD2.0 (Hadoop 2.2.0 based):
-[Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0%2BSNAPSHOT-1.noarch.rpm) ,
+[Spark 1.0.1](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm) ,
+[Spark 1.1.0](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0-3.noarch.rpm) ,
 [Spark master SNAPSHOT (17.07.2014)](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0%2BSNAPSHOT-5.noarch.rpm) 
 
 On your Hadoop master node Install the rpm from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local filesystem `sudo yum install ./spark-XXX.noarch.rpm`
@@ -89,7 +91,7 @@ Add spark-assembly jar to the `SPARK_SUBMIT_CLASSPATH`. The `spark-assembly-xxx.
 #### 4.3 Submit Sample Spark application: SparkPi
 
     export HADOOP_CONF_DIR=/etc/gphd/hadoop/conf
-    export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar
+    export SPARK_SUBMIT_CLASSPATH=/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar:/usr/share/spark/jars/spark-assembly-1.0.1-hadoop2.2.0.jar:
 
     /usr/share/spark/bin/spark-submit \
       --num-executors 10  \

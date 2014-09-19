@@ -10,6 +10,7 @@ ENV MAVEN_HOME /usr/local/maven
 ENV PATH $PATH:$MAVEN_HOME/bin
 
 ADD spark_rpm.patch /spark_rpm.patch
+ADD spark_lib_symlink.patch /spark_lib_symlink.patch
 ADD build_rpm.sh /build_rpm.sh
 
 RUN \
