@@ -72,13 +72,11 @@ Prerequisites: Installed Hadoop2/Yarn cluster. For testing the Spark rpm you can
 Pre-build Spark RPMs for:
 
 * Apache Hadoop 2.2.0:
-| [Spark-1.0.1-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.0.1-3.noarch.rpm) | 
-[Spark-1.1.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0-3.noarch.rpm) |
+| [Spark-1.1.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0/spark-1.1.0-3.noarch.rpm) |
 * PivotalHD2.0 (Hadoop 2.2.0 based):
-| [Spark-1.0.1-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm) |
- [Spark-1.1.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0-3.noarch.rpm) |
+| [Spark-1.1.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0-3.noarch.rpm) | 
 * PivotalHD2.1 (Hadoop 2.2.0 based):
-| [Spark-1.2.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.2.0-1.noarch.rpm) |   |
+| [Spark-1.2.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.1.0.0/spark-1.2.0-1.noarch.rpm) | 
 
 On your Hadoop master node Install the rpm from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local filesystem `sudo yum install ./spark-XXX.noarch.rpm`
 
