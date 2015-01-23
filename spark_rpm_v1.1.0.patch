@@ -1,15 +1,15 @@
-From 644de190425e4293ce2b744c00d13204739473a5 Mon Sep 17 00:00:00 2001
-From: root <root@cd0ae8867f86.(none)>
-Date: Fri, 23 Jan 2015 12:21:31 +0000
-Subject: [PATCH] alter to support spark 1.2.0
+From 4af8d25dfc6a5f51c26149799e693a8bf538aec0 Mon Sep 17 00:00:00 2001
+From: tzolov <christian.tzolov@gmail.com>
+Date: Wed, 17 Sep 2014 18:22:40 +0200
+Subject: [PATCH] spark build
 
 ---
- assembly/pom.xml |   12 ++++++++++++
- pom.xml          |    2 +-
- 2 files changed, 13 insertions(+), 1 deletions(-)
+ assembly/pom.xml | 12 ++++++++++++
+ pom.xml          |  2 +-
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
 diff --git a/assembly/pom.xml b/assembly/pom.xml
-index 5af17c5..8acff85 100644
+index 799f8d9..61c1dda 100644
 --- a/assembly/pom.xml
 +++ b/assembly/pom.xml
 @@ -40,6 +40,8 @@
@@ -21,10 +21,11 @@ index 5af17c5..8acff85 100644
    </properties>
  
    <dependencies>
-@@ -293,6 +295,16 @@
+@@ -253,6 +255,16 @@
+                         <prefix>${deb.install.path}/jars</prefix>
                        </mapper>
                      </data>
-                     <data>
++                     <data>
 +                      <src>${spark.examples.jar}</src>
 +                      <type>file</type>
 +                      <mapper>
@@ -34,30 +35,29 @@ index 5af17c5..8acff85 100644
 +                        <prefix>${deb.install.path}/jars</prefix>
 +                      </mapper>
 +                    </data>
-+                    <data>
+                     <data>
                        <src>${basedir}/src/deb/RELEASE</src>
                        <type>file</type>
-                       <mapper>
 diff --git a/pom.xml b/pom.xml
-index 57797a4..141e395 100644
+index 5235b90..b798b1d 100644
 --- a/pom.xml
 +++ b/pom.xml
-@@ -97,7 +97,6 @@
-     <module>sql/catalyst</module>
+@@ -95,7 +95,6 @@
      <module>sql/core</module>
      <module>sql/hive</module>
+     <module>repl</module>
 -    <module>assembly</module>
      <module>external/twitter</module>
+     <module>external/kafka</module>
      <module>external/flume</module>
-     <module>external/flume-sink</module>
-@@ -105,6 +104,7 @@
+@@ -103,6 +102,7 @@
      <module>external/zeromq</module>
+     <module>external/mqtt</module>
      <module>examples</module>
-     <module>repl</module>
 +    <module>assembly</module>
    </modules>
  
    <properties>
 -- 
-1.7.1
+1.8.3.4 (Apple Git-47)
 
