@@ -22,14 +22,14 @@ Created RPMs are stored into `/rpm/<Hadoop Version>` folder.
 
 Example usages:
 
-    # Build Spark 1.0.1 rpm for Apache Hadoop 2.2.0
-    /build_rpm.sh 2.2.0 tags/v1.0.1 
+    # Build Spark 1.2.0 rpm for Apache Hadoop 2.2.0
+    /build_rpm.sh 2.2.0 tags/v1.2.0 
 
-	# Build Spark 1.0.1 rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
-    /build_rpm.sh 2.2.0-gphd-3.0.1.0 tags/v1.0.1
+	# Build Spark 1.2.0 rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
+    /build_rpm.sh 2.2.0-gphd-3.1.0.0 tags/v1.2.0
     
-    # Build Spark master (last snapshot) rpm for PivotalHD2.0 (Hadoop2.2.0 complient)
-    /build_rpm.sh 2.2.0-gphd-3.0.1.0 master
+    # Build Spark master (last snapshot) rpm for PivotalHD2.1 (Hadoop2.2.0 complient)
+    /build_rpm.sh 2.2.0-gphd-3.1.0.0 master
     
 You can copy the `/rpm` folder over SSH to the Docker host or another server: `scp -rp /rpm docker@<Docker Host IP>: .`. In turn you can copy from the Docker Host into local folder: `scp -rp docker@<Docker Host IP>:rpm <Your Local Folder>`.
     
@@ -42,7 +42,7 @@ Detail instructions how to synch the Spark git repository, apply optional patch,
 
     # Pick a branch/tag to generate RPM for. 
     # Use `git  branch -a` or `git tag` to list the available branches/tags
-    git checkout tags/v1.0.1
+    git checkout tags/v1.2.0
 
     # Patch to allows no-root user to run spark 
     # and to include the spark examples into the rpm
@@ -77,6 +77,8 @@ Pre-build Spark RPMs for:
 * PivotalHD2.0 (Hadoop 2.2.0 based):
 | [Spark-1.0.1-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.0.1-1.noarch.rpm) |
  [Spark-1.1.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.1.0-3.noarch.rpm) |
+* PivotalHD2.1 (Hadoop 2.2.0 based):
+| [Spark-1.2.0-RPM](https://dl.dropboxusercontent.com/u/79241625/spark/rpm/2.2.0-gphd-3.0.1.0/spark-1.2.0-1.noarch.rpm) |   |
 
 On your Hadoop master node Install the rpm from a remote url: `sudo yum -y install <use one of the RPM urls above>` or from the local filesystem `sudo yum install ./spark-XXX.noarch.rpm`
 
