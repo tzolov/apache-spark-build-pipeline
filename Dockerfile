@@ -20,7 +20,7 @@ RUN \
     yum -y install ./jdk-7u65-linux-x64.rpm; java -version ;\
     rm ./jdk-7u65-linux-x64.rpm ;\
     echo "------------- Install Maven3 ---------------------------------------------------------------" ;\
-    curl -o /tmp/maven.tar.gz http://ftp.nluug.nl/internet/apache/maven/maven-3/3.2.2/binaries/apache-maven-3.2.2-bin.tar.gz  ;\
+    curl -o /tmp/maven.tar.gz http://ftp.nluug.nl/internet/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz  ;\
     mkdir $MAVEN_HOME  ;\
     tar -C $MAVEN_HOME -xzvf /tmp/maven.tar.gz --strip 1  ;\
     rm /tmp/maven.tar.gz ;\
