@@ -16,9 +16,11 @@ ADD build_rpm.sh /build_rpm.sh
 RUN \
     echo "----------------------------- Install JDK 7, GIT and OS Utilities --------------------------" ;\
     yum -y install git wget which unzip tar ;\
-    wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/7u65-b17/jdk-7u65-linux-x64.rpm" ;\
-    yum -y install ./jdk-7u65-linux-x64.rpm; java -version ;\
-    rm ./jdk-7u65-linux-x64.rpm ;\
+    wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-linux-x64-rpm.bin" ;\
+    chmod +x jdk-6u45-linux-x64-rpm.bin ;\
+    ./jdk-6u45-linux-x64-rpm.bin ;\
+    yum -y install ./jdk-6u45-linux-amd64.rpm ;\
+    rm ./jdk-6u45-linux-amd64.rpm ;\
     echo "------------- Install Maven3 ---------------------------------------------------------------" ;\
     curl -o /tmp/maven.tar.gz http://ftp.nluug.nl/internet/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.tar.gz  ;\
     mkdir $MAVEN_HOME  ;\
