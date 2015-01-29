@@ -4,7 +4,7 @@ MAINTAINER Christian Tzolov "https://github.com/tzolov"
 
 USER root
 
-ENV JAVA_HOME /usr/java/jdk1.7.0_65
+ENV JAVA_HOME /usr/java/jdk1.6.0_45
 ENV MAVEN_OPTS -Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m
 ENV MAVEN_HOME /usr/local/maven
 ENV PATH $PATH:$MAVEN_HOME/bin
@@ -14,7 +14,7 @@ ADD spark_lib_symlink.patch /spark_lib_symlink.patch
 ADD build_rpm.sh /build_rpm.sh
 
 RUN \
-    echo "----------------------------- Install JDK 7, GIT and OS Utilities --------------------------" ;\
+    echo "----------------------------- Install JDK 6, GIT and OS Utilities --------------------------" ;\
     yum -y install git wget which unzip tar ;\
     wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" "http://download.oracle.com/otn-pub/java/jdk/6u45-b06/jdk-6u45-linux-x64-rpm.bin" ;\
     chmod +x jdk-6u45-linux-x64-rpm.bin ;\
