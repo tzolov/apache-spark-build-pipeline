@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# /build_rpm.sh 2.2.0 tags/v1.1.0
-# /build_rpm.sh 2.2.0-gphd-3.1.0.0 tags/v1.1.0
+# /build_rpm.sh 2.2.0 tags/v1.2.0
+# /build_rpm.sh 2.2.0-gphd-3.1.0.0 tags/v1.2.0
 # scp -rp /rpm docker@192.168.59.103:
 
 if [ ! $# -eq 2 ]; then
    echo "Two arguments are expected but found: $#!"
    echo "Usage: /build_rpm.sh <Hadoop Distro> <Spark Git Branch/Tag>"
-   echo "Examples: /build_rpm.sh 2.2.0 tags/v1.1.0 or /build_rpm.sh 2.2.0-gphd-3.1.0.0 master"
+   echo "Examples: /build_rpm.sh 2.2.0 tags/v1.2.0 or /build_rpm.sh 2.2.0-gphd-3.1.0.0 master"
    exit 1
 fi
 
@@ -27,7 +27,8 @@ git branch
 
 # Add Examples jar to the RPM. Fix the bin permissions to allow non-root users start Spark
 git am < /spark_assembly.patch
-#git apply /spark_assembly.patch
+
+# git apply /spark_assembly.patch
 
 # Kick the build
 mvn -Pyarn -Phadoop-2.2 -Pdeb -Dhadoop.version=$HADOOP_DIST -DskipTests -Ddeb.bin.filemode=755 clean package
