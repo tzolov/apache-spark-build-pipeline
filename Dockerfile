@@ -9,8 +9,7 @@ ENV MAVEN_OPTS -Xmx2g -XX:MaxPermSize=512M -XX:ReservedCodeCacheSize=512m
 ENV MAVEN_HOME /usr/local/maven
 ENV PATH $PATH:$MAVEN_HOME/bin
 
-ADD spark_rpm.patch /spark_rpm.patch
-ADD spark_lib_symlink.patch /spark_lib_symlink.patch
+ADD spark_assembly.patch /spark_assembly.patch
 ADD build_rpm.sh /build_rpm.sh
 
 RUN \
