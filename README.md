@@ -1,3 +1,5 @@
+### Deprecated in favor of a generic and standard approach: [https://github.com/tzolov/bigtop-centos]. For more info read the [How-To Guide](http://blog.tzolov.net/2015/06/leverage-apache-bigtop-to-build-hadoop.html?view=sidebar).
+
 Apache Spark Build Pipeline
 ===========================
 
